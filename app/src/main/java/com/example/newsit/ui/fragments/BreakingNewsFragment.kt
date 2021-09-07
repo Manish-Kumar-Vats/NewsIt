@@ -2,23 +2,34 @@ package com.example.newsit.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.newsit.R
 import com.example.newsit.adapters.NewsAdapter
+import com.example.newsit.databinding.FragmentBreakingNewsBinding
 import com.example.newsit.ui.NewsActivity
 import com.example.newsit.ui.NewsViewModel
 import com.example.newsit.util.Resource
-import kotlinx.android.synthetic.main.fragment_breaking_news.*
 
-class BreakingNewsFragment:Fragment(R.layout.fragment_breaking_news) {
+class BreakingNewsFragment:Fragment() {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
+    //binding variable
+    private lateinit var binding: FragmentBreakingNewsBinding
 
     val TAG="BreakingNewsFragment"
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentBreakingNewsBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -48,15 +59,15 @@ class BreakingNewsFragment:Fragment(R.layout.fragment_breaking_news) {
     }
 
     private fun hideProgressBar(){
-        paginationProgressBar.visibility=View.INVISIBLE
+        binding.paginationProgressBar.visibility=View.INVISIBLE
     }
 
     private fun showProgressBar(){
-        paginationProgressBar.visibility=View.VISIBLE
+        binding.paginationProgressBar.visibility=View.VISIBLE
     }
     private fun setupRecyclerView(){
         newsAdapter= NewsAdapter()
-        rvBreakingNews.apply {
+        binding.rvBreakingNews.apply {
             adapter=newsAdapter
             layoutManager=LinearLayoutManager(activity)
         }
